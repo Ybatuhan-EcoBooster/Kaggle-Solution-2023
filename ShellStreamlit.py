@@ -19,10 +19,7 @@ submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.
 def LSTM_Model():
     Target_df_new = Target()
     test = Target_df_new[-23:]
-    try:
-        target_model = NeuralForecast.load(path='./LSTMModel.json')
-    except:
-        pass
+    target_model = NeuralForecast.load(path='./LSTMModel.json')
     prediction = target_model.predict(test).reset_index()
     predicition_limitied = prediction[:70]
 
