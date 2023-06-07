@@ -66,11 +66,11 @@ def Platts():
     Platts10PPM_3_prediciton =  Plattes_Models[2].predict(horizon=32)
     Platts10PPM_3_prediciton.columns = ["unique_id","ds","y"]
 
-    Platts10PPM_1 = Platts10PPM_1.append(Platts10PPM_1_prediciton,ignore_index = True)
+    Platts10PPM_1 = pd.concat([Platts10PPM_1,Platts10PPM_1_prediciton],ignore_index = True)
     Platts10PPM_1.columns = ["ds","unique_id","AB Piyasa Fiyatı"]
-    Platts10PPM_2 = Platts10PPM_2.append(Platts10PPM_2_prediciton,ignore_index = True)
+    Platts10PPM_2 = pd.concat([Platts10PPM_2,Platts10PPM_2_prediciton],ignore_index = True)
     Platts10PPM_2.columns = ["ds","unique_id","AB Piyasa Fiyatı-Yüksek"]
-    Platts10PPM_3 = Platts10PPM_3.append(Platts10PPM_3_prediciton,ignore_index = True)
+    Platts10PPM_3 = pd.concat([Platts10PPM_3,Platts10PPM_3_prediciton],ignore_index = True)
     Platts10PPM_3.columns = ["ds","unique_id","AB Piyasa Fiyatı-Düşük"]
 
     Platts10PPM = pd.merge(Platts10PPM_1, Platts10PPM_2,on=["ds","unique_id"], how='inner')
@@ -87,11 +87,11 @@ def Platts():
     PlattsPremunl10PPM_3_prediciton =  Plattes_Models[5].predict(horizon=32)
     PlattsPremunl10PPM_3_prediciton.columns = ["unique_id","ds","y"]
 
-    PlattsPremunl10PPM_1 = PlattsPremunl10PPM_1.append(PlattsPremunl10PPM_1_prediciton,ignore_index = True)
+    PlattsPremunl10PPM_1 = pd.concat([PlattsPremunl10PPM_1,PlattsPremunl10PPM_1_prediciton],ignore_index = True)
     PlattsPremunl10PPM_1.columns = ["ds","unique_id","AB Piyasa Fiyatı"]
-    PlattsPremunl10PPM_2 = PlattsPremunl10PPM_2.append(PlattsPremunl10PPM_2_prediciton,ignore_index = True)
+    PlattsPremunl10PPM_2 = pd.concat([PlattsPremunl10PPM_2,PlattsPremunl10PPM_2_prediciton],ignore_index = True)
     PlattsPremunl10PPM_2.columns = ["ds","unique_id","AB Piyasa Fiyatı-Yüksek"]
-    PlattsPremunl10PPM_3 = PlattsPremunl10PPM_3.append(PlattsPremunl10PPM_3_prediciton,ignore_index = True)
+    PlattsPremunl10PPM_3 = pd.concat([PlattsPremunl10PPM_3,PlattsPremunl10PPM_3_prediciton],ignore_index = True)
     PlattsPremunl10PPM_3.columns = ["ds","unique_id","AB Piyasa Fiyatı-Düşük"]
 
     PlattsPremunl10PPM = pd.merge(PlattsPremunl10PPM_1, PlattsPremunl10PPM_2,on=["ds","unique_id"], how='inner')

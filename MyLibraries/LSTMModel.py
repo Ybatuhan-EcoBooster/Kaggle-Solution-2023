@@ -1,8 +1,6 @@
 # Core Libraries
 import pandas as pd 
-import numpy as np
 
-from window_ops.rolling import rolling_mean, rolling_max, rolling_min
 from neuralforecast import NeuralForecast
 from neuralforecast.models import LSTM
 from neuralforecast.losses.pytorch import DistributionLoss
