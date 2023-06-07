@@ -1,10 +1,6 @@
 # Streamlit Web
 import streamlit as st
 from streamlit_extras.colored_header import colored_header
-import subprocess
-
-subprocess.run(["python", "LSTMModel.py"])
-subprocess.run(["python", "DataSets.py"])
 
 #Graphs
 import plotly.graph_objects as go
