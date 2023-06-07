@@ -7,7 +7,7 @@ from neuralforecast import NeuralForecast
 from neuralforecast.models import LSTM
 from neuralforecast.losses.pytorch import DistributionLoss
 
-from DataSets import *
+from MyLibraries.DataSets import *
 
 
 submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
