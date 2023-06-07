@@ -5,6 +5,7 @@ from neuralforecast import NeuralForecast
 from neuralforecast.models import LSTM
 from neuralforecast.losses.pytorch import DistributionLoss
 
+
 from MyLibraries.DataSets import *
 
 
@@ -48,5 +49,6 @@ def LSTM_model():
     target_submission = pd.merge(submission_new,submission, left_index=True,right_index=True, how="inner")
     target_submission = target_submission[["Date_y","LSTM-median"]]
     target_submission.columns = ["Date","Net Cashflow from Operations"]
+
 
     return target_submission

@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 #My Libraries
 from MyLibraries.DataSets import *
-from MyLibraries.LSTMModel import *
+from neuralforecast import NeuralForecast
 
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
@@ -17,9 +17,26 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
 # ML Model
 @st.cache_resource
 def LSTM_Model():
-    LSTM_df = LSTM_model()
+    Target_df_new = Target()
+    test = Target_df_new[-23:]
+    submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
+    target_model = NeuralForecast.load(path='LSTMModel.json')
+    prediction = target_model.predict(test).reset_index()
+
+    predicition_limitied = prediction[:70]
+
+    predicition_new = predicition_limitied
+    predicition_new.rename(columns={"ds":"Date"}, inplace=True)
+    predicition_new["Date"] = predicition_new["Date"].dt.strftime("%Y-%m-%d")
+
+    submission_new = predicition_new[["Date","LSTM-median"]]
+
+    target_submission = pd.merge(submission_new,submission, left_index=True,right_index=True, how="inner")
+    target_submission = target_submission[["Date_y","LSTM-median"]]
+    target_submission.columns = ["Date","Net Cashflow from Operations"]
     st.balloons()        
-    return LSTM_df
+    
+    return target_submission
 
 # Containers
 Main_target_graph = st.container()
