@@ -1,3 +1,5 @@
 plotly
 streamlit
 streamlit_extras
+pacakages.LSTMModel
+pacakages.DataSets
