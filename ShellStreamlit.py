@@ -6,8 +6,8 @@ from streamlit_extras.colored_header import colored_header
 import plotly.graph_objects as go
 
 # My Libraries
-from MyLibraries.LSTMModel import *
-from MyLibraries.DataSets import *
+from MyLibraries.LSTMModel import LSTM_model
+from MyLibraries.DataSets import CashFlow,Target,Currency
 
 
 ### Page Configure ###
