@@ -1,6 +1,7 @@
 # Streamlit Web
 import streamlit as st
 from streamlit_extras.colored_header import colored_header
+import os
 
 #Graphs
 import plotly.graph_objects as go
