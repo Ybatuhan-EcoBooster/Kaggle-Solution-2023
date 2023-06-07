@@ -1,5 +1,3 @@
 plotly
 streamlit
 streamlit_extras
-LSTMModel
-DataSets
