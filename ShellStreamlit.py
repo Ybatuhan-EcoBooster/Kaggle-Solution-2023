@@ -7,8 +7,8 @@ import plotly.graph_objects as go
 
 # My Libraries
 import os
-from pacakages.LSTMModel import *
-from pacakages.DataSets import *
+from packages.LSTMModel import *
+from packages.DataSets import *
 
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
