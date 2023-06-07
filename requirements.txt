@@ -1,6 +1,6 @@
-streamlit
 time
-streamlit_extras.colored_header
 plotly
 LSTMModel
 DataSets
+streamlit
+plotly
