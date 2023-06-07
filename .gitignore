@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 lightning_logs
 .gitattributes
+SehllCashFlowDatathon2023
 # C extensions
 *.so
 
