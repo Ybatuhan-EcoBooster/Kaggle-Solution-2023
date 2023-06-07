@@ -61,5 +61,3 @@ def Target():
     Target_df_new["unique_id"] = "Shell"
 
     return Target_df_new
-
-print(Platts())
