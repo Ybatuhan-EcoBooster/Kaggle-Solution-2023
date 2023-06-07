@@ -16,7 +16,7 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
 
 # ML Model
 
-@st.cache_resource
+@st.cache
 def LSTM_Model():
     Target_df_new = Target()
     test = Target_df_new[-23:]
