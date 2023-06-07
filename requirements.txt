@@ -3,5 +3,3 @@ time
 PIL
 streamlit_extras.colored_header
 plotly
-LSTMModel
-DataSets
