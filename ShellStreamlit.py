@@ -6,8 +6,9 @@ from streamlit_extras.colored_header import colored_header
 import plotly.graph_objects as go
 
 # My Libraries
-from pacakages.LSTMModel import *
-from pacakages.DataSets import *
+from MyLibraries.LSTMModel import *
+from MyLibraries.DataSets import *
+
 
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
