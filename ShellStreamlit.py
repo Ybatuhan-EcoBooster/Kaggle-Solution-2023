@@ -17,10 +17,10 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
 submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
 Target_df_new = Target()
 test = Target_df_new[-23:]
+target_model = NeuralForecast.load(path='./LSTMModel.json')
 
 @st.cache_data
 def LSTM_Model():
-    target_model = NeuralForecast.load(path='./LSTMModel.json')
     prediction = target_model.predict(test).reset_index()
     predicition_limitied = prediction[:70]
 
