@@ -14,12 +14,11 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
                     layout = 'wide')
 
 # ML Model
-@st.cache_data
+@st.cache_data(persist="disk")
 def LSTM_Model():
 
     model = LSTM_model() 
-    st.balloons()
-            
+    st.balloons()        
     return model
 
 # Containers

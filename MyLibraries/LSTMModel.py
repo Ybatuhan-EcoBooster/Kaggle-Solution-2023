@@ -2,8 +2,6 @@
 import pandas as pd 
 
 from neuralforecast import NeuralForecast
-import pickle
-
 from MyLibraries.DataSets import *
 
 
@@ -18,8 +16,7 @@ train = Target_df_new[:-23]
 test = Target_df_new[-23:]
 
 def LSTM_model():
-
-    target_model = NeuralForecast.load("./MLModel/")
+    target_model = NeuralForecast.load('MLModel')
 
     prediction = target_model.predict(test).reset_index()
 
