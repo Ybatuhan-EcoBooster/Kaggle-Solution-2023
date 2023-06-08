@@ -7,35 +7,20 @@ import plotly.graph_objects as go
 
 #My Libraries
 from MyLibraries.DataSets import *
-import json
+from MyLibraries.LSTMModel import *
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
                     page_icon ='✅',
                     layout = 'wide')
 
 # ML Model
-submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
-Target_df_new = Target()
-test = Target_df_new[-23:]
-model = open("LSTMModel.json","r")
-target_model = json.load(model)
-
 @st.cache_data
 def LSTM_Model():
-    prediction = target_model.predict(test).reset_index()
-    predicition_limitied = prediction[:70]
 
-    predicition_new = predicition_limitied
-    predicition_new.rename(columns={"ds":"Date"}, inplace=True)
-    predicition_new["Date"] = predicition_new["Date"].dt.strftime("%Y-%m-%d")
-
-    submission_new = predicition_new[["Date","LSTM-median"]]
-
-    target_submission = pd.merge(submission_new,submission, left_index=True,right_index=True, how="inner")
-    target_submission = target_submission[["Date_y","LSTM-median"]]
-    target_submission.columns = ["Date","Net Cashflow from Operations"]
-    st.balloons()        
-    return target_submission
+    model = LSTM_model() 
+    st.balloons()
+            
+    return model
 
 # Containers
 Main_target_graph = st.container()

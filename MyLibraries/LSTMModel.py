@@ -21,21 +21,8 @@ test = Target_df_new[-23:]
 
 def LSTM_model():
 
-    models = [LSTM(h=h,input_size=-1,
-                loss=DistributionLoss(distribution='Normal', level=[90]),
-                max_steps=150,
-                encoder_n_layers=2,
-                encoder_hidden_size=200,
-                context_size=10,
-                decoder_hidden_size=200,
-                decoder_layers=2,
-                learning_rate=1e-3,
-                scaler_type='standard',
-                futr_exog_list=['onpromotion'])]
+    target_model = NeuralForecast.load("LSTMModel.json")
 
-    target_model = NeuralForecast(models=models, freq='D')
-
-    target_model.fit(train)
     prediction = target_model.predict(test).reset_index()
 
     predicition_limitied = prediction[:70]
