@@ -15,10 +15,11 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
 
 # ML Model
 submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
-@st.cache
+Target_df_new = Target()
+test = Target_df_new[-23:]
+
+@st.cache_data
 def LSTM_Model():
-    Target_df_new = Target()
-    test = Target_df_new[-23:]
     target_model = NeuralForecast.load(path='./LSTMModel.json')
     prediction = target_model.predict(test).reset_index()
     predicition_limitied = prediction[:70]
@@ -33,7 +34,6 @@ def LSTM_Model():
     target_submission = target_submission[["Date_y","LSTM-median"]]
     target_submission.columns = ["Date","Net Cashflow from Operations"]
     st.balloons()        
-    
     return target_submission
 
 # Containers
@@ -58,8 +58,6 @@ with Main_target_graph:
     CashFlow_df = CashFlow()
 
     if LSTM_checkbox:
-
-        
         
         with st.spinner('⚙️ Working Progress - \t This Progress takes couple minutes!⏱'):
             Model_df = LSTM_Model()
