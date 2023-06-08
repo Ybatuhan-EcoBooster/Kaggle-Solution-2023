@@ -2,8 +2,6 @@
 import pandas as pd 
 
 from neuralforecast import NeuralForecast
-from neuralforecast.models import LSTM
-from neuralforecast.losses.pytorch import DistributionLoss
 import pickle
 
 from MyLibraries.DataSets import *
@@ -21,7 +19,7 @@ test = Target_df_new[-23:]
 
 def LSTM_model():
 
-    target_model = NeuralForecast.load("LSTMModel.json")
+    target_model = NeuralForecast.load("./MLModel/")
 
     prediction = target_model.predict(test).reset_index()
 
