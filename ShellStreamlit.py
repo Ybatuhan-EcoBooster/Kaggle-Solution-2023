@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 
 #My Libraries
 from MyLibraries.DataSets import *
-from neuralforecast import NeuralForecast
+import json
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
                     page_icon ='✅',
@@ -17,7 +17,8 @@ st.set_page_config(page_title = "Sehll Cash Flow Dashboard",
 submission = pd.read_csv("shell-datathon-cash-flow-coderspace/sample_submission.csv")
 Target_df_new = Target()
 test = Target_df_new[-23:]
-target_model = NeuralForecast.load(path='./LSTMModel.json')
+model = open("LSTMModel.json","r")
+target_model = json.load(model)
 
 @st.cache_data
 def LSTM_Model():
