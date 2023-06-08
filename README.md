@@ -6,7 +6,7 @@ I am making finance analysis in Python to handle big data. In this project, I pa
 
 I predicted the Net Cash flow given from Shell Company data sets with external factors to 70 days. With this prediction, I used LSTM and Xgboost machine learning models to forecast. Before that, I cleaned a couple of columns and I estimated Platte's data sets with Xgboost. After that, I merged whole columns for the main prediction. I chose the LSTM model to give perfect results and less MAE scores for that. You can find my process model working codes in [ShellCashFlow.ipynb](https://github.com/Ybatuhan-EcoBooster/SehllCashFlowDatathon2023/blob/main/ShellCashFlow.ipynb) file.
 
-[## Streamlit Library 💻](https://sehllcashflowdatathon2023.streamlit.app/)
+## Streamlit Library 💻
 [**Streamlit:**](https://sehllcashflowdatathon2023.streamlit.app/) I made some part of my project on Streamlit. It provided many tools for achieving my project's visualization. 
 
 ## 📌 Sources 
