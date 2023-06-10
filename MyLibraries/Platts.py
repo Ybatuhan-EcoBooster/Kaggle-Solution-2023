@@ -1,6 +1,5 @@
 #Core Libraries
 import pandas as pd
-import numpy as np
 
 # Prediction Libraries
 from xgboost import XGBRegressor

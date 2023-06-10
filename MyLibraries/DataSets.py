@@ -2,16 +2,19 @@
 import pandas as pd 
 import numpy as np
 
+
 from MyLibraries.Platts import *
 
+def Brent():
+    Brent = pd.read_csv("shell-datathon-cash-flow-coderspace/brent.csv")
+    Brent["Tarih"] = pd.to_datetime(Brent["Tarih"])
+    Brent["Tarih"] = pd.DatetimeIndex(Brent["Tarih"].dt.strftime("%Y-%m-%d"))
+    Brent = Brent.iloc[:,:-1]
+    Brent.set_index("Tarih", inplace=True)
+    Brent = Brent.reset_index()
+    Brent.rename(columns={"Tarih":"Date"},inplace= True)
 
-Brent = pd.read_csv("shell-datathon-cash-flow-coderspace/brent.csv")
-Brent["Tarih"] = pd.to_datetime(Brent["Tarih"])
-Brent["Tarih"] = pd.DatetimeIndex(Brent["Tarih"].dt.strftime("%Y-%m-%d"))
-Brent = Brent.iloc[:,:-1]
-Brent.set_index("Tarih", inplace=True)
-Brent = Brent.reset_index()
-Brent.rename(columns={"Tarih":"Date"},inplace= True)
+    return Brent
     
 
 def CashFlow():  
@@ -36,16 +39,10 @@ def Currency():
     return Currency
 
 
-
-df = pd.merge(CashFlow(), Currency(),on="Date", how='inner')
-df = pd.merge(df,Brent,on="Date",how='inner')
-
-
-
-platts = Platts()
-
 def Target():
-    
+    platts = Platts()
+    df = pd.merge(CashFlow(), Currency(),on="Date", how='inner')
+    df = pd.merge(df,Brent(),on="Date",how='inner')  
     df['Date'] = pd.to_datetime(df['Date'])
     platts['Date'] = pd.to_datetime(platts['Date'])
 
