@@ -18,7 +18,7 @@ def Brent():
     
 
 def CashFlow():  
-    CashFlow = pd.read_csv("shell-datathon-cash-flow-coderspace/cash_flow_train.csv")
+    CashFlow = pd.read_csv("shell-datathon-cash-flow-coderspace\cash_flow_train.csv")
     CashFlow["Inflows- currency"] = CashFlow["Inflows- currency"].replace(np.nan,0)
     CashFlow["Date"] = pd.to_datetime(CashFlow["Date"])
     CashFlow["Date"] = pd.DatetimeIndex(CashFlow["Date"].dt.strftime("%Y-%m-%d"))
