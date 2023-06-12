@@ -1,3 +1,10 @@
+
+''' 
+   - -> run commend is = streamlit run ShellStreamlit.py 
+
+'''
+
+
 # Streamlit Web
 import streamlit as st
 from streamlit_extras.colored_header import colored_header
@@ -5,12 +12,15 @@ from streamlit_extras.colored_header import colored_header
 #Graphs
 import plotly.graph_objects as go
 
+# Data Sets
 from MyLibraries.DataSets import *
 from MyLibraries.LSTMModel import *
+
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard 2023",
                     page_icon ='✅',
                     layout = 'wide')
+
 
 Target_df_new = Target()
 train = Target_df_new[:-23]
@@ -26,7 +36,8 @@ Text = st.container()
 Information = st.container()
 DataSet = st.container()
 
-##########################################################################
+########################################################################## 2.Part ###################################################
+
 def CurrencyTable():
     with placeholder_2.container():
         with Currency_area:
@@ -176,7 +187,7 @@ def CurrencyTable():
                     html_5 = "![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)"
                     st.markdown(html_5,unsafe_allow_html=True)
 
-########################################################################## ML Model #############################################
+########################################################################## 1. Part ML Model #############################################
 with placeholder.container():
     colored_header(label="Welcome To Sehll Cash Flow Datathon 2023 Dashboard Project!",description= None ,color_name="light-blue-70")
     with DataSet:

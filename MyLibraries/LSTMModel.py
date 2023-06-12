@@ -1,17 +1,31 @@
+# Core Libraries
 import pandas as pd
+
+#Prediction Libraries 
 from neuralforecast import NeuralForecast
 from neuralforecast.models import LSTM
 from neuralforecast.losses.pytorch import DistributionLoss
 
+# Main Table 
 from MyLibraries.DataSets import *
+
 
 Target_df_new = Target()
 
-train = Target_df_new[:-23]
+train = Target_df_new[:-23] # Train and test size aranged in here
 test = Target_df_new[-23:]
-h = Target_df_new.index.nunique()
 
+h = Target_df_new.index.nunique() #Forecast Horizon, Recommendation range is Target_df_new.index.nunique()
 
+''' 
+Model Web Url = https://nixtla.github.io/neuralforecast/models.lstm.html
+
+- max_step = if laearning_rate is low, max_step should be high.
+- Available scaler_type = 'standard','None' or 'robust'
+- Available distributions = 'Poisson','Normal','StudentT','NegativeBinomial','Tweedie' or 'Bernoulli (Temporal Classifiers)'
+
+Recommended Features are writing in here
+'''
 def LSTMModelMain(max_step,submissioncsv = None):
         h = Target_df_new.index.nunique()
         models = [LSTM(h=h,input_size=-1,
@@ -26,7 +40,7 @@ def LSTMModelMain(max_step,submissioncsv = None):
                         scaler_type='standard',
                         futr_exog_list=['onpromotion'])]
 
-        target_model = NeuralForecast(models=models, freq='D')
+        target_model = NeuralForecast(models=models, freq='D') # freq = Daily Prediciton
         target_model.fit(train)
 
         prediction = target_model.predict(test).reset_index()

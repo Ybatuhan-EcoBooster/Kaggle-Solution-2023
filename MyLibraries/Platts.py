@@ -6,6 +6,8 @@ from xgboost import XGBRegressor
 from mlforecast import MLForecast
 from window_ops.rolling import rolling_mean, rolling_max, rolling_min
 
+
+# Prediciton of Platts
 def Platts():
     Platts = pd.read_csv("shell-datathon-cash-flow-coderspace/platts.csv")
     Platts["Tarih"] = pd.to_datetime(Platts['Tarih'])
@@ -41,6 +43,10 @@ def Platts():
 
     Platts_model_list = [Platts10PPM_1,Platts10PPM_2,Platts10PPM_3,PlattsPremunl10PPM_1,PlattsPremunl10PPM_2,PlattsPremunl10PPM_3]
 
+    ''' XGBoost web url = https://xgboost.readthedocs.io/en/stable/
+        MlForecast web url = https://nixtla.github.io/mlforecast/
+    '''
+
     models = [XGBRegressor(random_state=0, n_estimators=100)]
 
     model = MLForecast(models=models,
@@ -55,6 +61,9 @@ def Platts():
 
     Plattes_Models = [] 
     for i in Platts_model_list:
+        # uniqe id = It should Be Platts10PPM and PlattsPremunl10PPM
+        # y  =   prediciton Column
+        # ds = Date of estiamtion
         models_list = model.fit(i, id_col='unique_id', time_col='ds', target_col='y', static_features=[])
         Plattes_Models.append(models_list)
 
