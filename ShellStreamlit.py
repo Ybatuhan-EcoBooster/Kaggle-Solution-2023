@@ -179,19 +179,20 @@ def CurrencyTable():
 ########################################################################## ML Model #############################################
 with placeholder.container():
     colored_header(label="Welcome To Sehll Cash Flow Datathon 2023 Dashboard Project!",description= None ,color_name="light-blue-70")
-    with st.spinner("⚙️ Working Progress... This Progress takes couple minutes!⏱"):
-        with DataSet:
-            Submission_csv = st.sidebar.file_uploader("Choose a Submission file",accept_multiple_files=False)
-            if Submission_csv is not None:
-                Submission_df = Submission_csv  
+    with DataSet:
+        Submission_csv = st.sidebar.file_uploader("Choose a Submission file",accept_multiple_files=False)
+        if Submission_csv is not None:
+            Submission_df = Submission_csv  
             
-            option = st.sidebar.text_input( "Please Enter Train Size Number!!! 👇")
-            st.sidebar.write('You selected:',option)
-                
-            def LSTM_Model():
-                model = LSTMModelMain(int(option),Submission_df)
-                return model
+        option = st.sidebar.text_input( "Please Enter Train Size Number!!! 👇")
+        st.sidebar.write('You selected:',option)
 
+        @st.cache_data(show_spinner="⚙️ Working Progress... This Progress takes couple minutes!⏱")
+        def LSTM_Model():
+            model = LSTMModelMain(int(option),Submission_df)
+            return model
+
+        st.sidebar.info("Please Before Run (Upload Brent-CashFlow-Platts-USD csv file) inside of shell-datathon-cash-flow-coderspace file")
 
         # Main Graph
         with Main_target_graph:
@@ -202,11 +203,11 @@ with placeholder.container():
                 if LSTM_checkbox:
                     Model_df = LSTM_Model()
                     Main_graph = go.Figure()
-                    Main_graph.add_trace(go.Line(x= train["ds"], marker_color="ghostwhite",y= train["y"], name = "Train"))
-                    Main_graph.add_trace(go.Line(x=test["ds"],marker_color="ghostwhite" ,y = test["y"], name = "Test"))
+                    Main_graph.add_trace(go.Line(x= train["ds"], marker_color="skyblue",y= train["y"], name = "Train",visible='legendonly'))
+                    Main_graph.add_trace(go.Line(x=test["ds"],marker_color="red" ,y = test["y"], name = "Test"))
                     Main_graph.add_trace(go.Line(x= Model_df["Date"], y= Model_df["Net Cashflow from Operations"],marker_color="gold", name = "Prediction"))
-                    Main_graph.add_trace(go.Line(x= CashFlow_df["Date"],y=CashFlow_df["Total Inflows"],name ="Total Inflows",marker_color="ghostwhite",line=dict(dash ="dashdot")))
-                    Main_graph.add_trace(go.Line(x= CashFlow_df["Date"],y=CashFlow_df["Total Outflows"],name ="Total Outflows",marker_color="ghostwhite",line=dict(dash ="dashdot")))
+                    Main_graph.add_trace(go.Line(x= CashFlow_df["Date"],y=CashFlow_df["Total Inflows"],name ="Total Inflows",marker_color="magenta",line=dict(dash ="dashdot"),visible='legendonly'))
+                    Main_graph.add_trace(go.Line(x= CashFlow_df["Date"],y=CashFlow_df["Total Outflows"],name ="Total Outflows",marker_color="orange",line=dict(dash ="dashdot"),visible='legendonly'))
                     Main_graph.update_xaxes(title_text = 'Date')
                     Main_graph.update_yaxes(title_text = 'Price')
                     Main_graph.update_layout(autosize=False, width = 1400, height = 500,title = "Forecasting Net Cashflow from Operations",legend_title_text='Parameters')
