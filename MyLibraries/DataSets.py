@@ -5,13 +5,10 @@
 import pandas as pd 
 import numpy as np
 
-# New Platts DataSet 
-from MyLibraries.Platts import *
-
 
 # Brent File
-def Brent():
-    Brent = pd.read_csv("shell-datathon-cash-flow-coderspace/brent.csv")
+def Brent(brentcsv = None):
+    Brent = pd.read_csv(brentcsv)
     Brent["Tarih"] = pd.to_datetime(Brent["Tarih"])
     Brent["Tarih"] = pd.DatetimeIndex(Brent["Tarih"].dt.strftime("%Y-%m-%d"))
     Brent = Brent.iloc[:,:-1]
@@ -22,8 +19,8 @@ def Brent():
     return Brent
     
 # Cashflow Train File
-def CashFlow():  
-    CashFlow = pd.read_csv("shell-datathon-cash-flow-coderspace\cash_flow_train.csv")
+def CashFlow(cashflowcsv=None):  
+    CashFlow = pd.read_csv(cashflowcsv)
     CashFlow["Inflows- currency"] = CashFlow["Inflows- currency"].replace(np.nan,0)
     CashFlow["Date"] = pd.to_datetime(CashFlow["Date"])
     CashFlow["Date"] = pd.DatetimeIndex(CashFlow["Date"].dt.strftime("%Y-%m-%d"))
@@ -34,8 +31,8 @@ def CashFlow():
 
 
 #USD File 
-def Currency():
-    Currency = pd.read_csv("shell-datathon-cash-flow-coderspace/usd.csv")
+def Currency(Currencycsv = None):
+    Currency = pd.read_csv(Currencycsv)
     Currency["Tarih"] = pd.to_datetime(Currency["Tarih"])
     Currency["Tarih"] = pd.DatetimeIndex(Currency["Tarih"].dt.strftime("%Y-%m-%d"))
     Currency.rename(columns={"Tarih":"Date"},inplace=True)
@@ -45,8 +42,6 @@ def Currency():
 
     return Currency
 
-
-
 # Targe is final dataframe of estimation
 ''' Target Dataframe is inclueds:
     -Platts
@@ -54,11 +49,11 @@ def Currency():
     -Cashflow
     -Usd
 '''
-def Target():
+def Target(plattscsv = None,Cashflowcsv = None,currencycsv = None,brentcsv = None):
     #Merged DataSets
-    platts = Platts()
-    df = pd.merge(CashFlow(), Currency(),on="Date", how='inner')
-    df = pd.merge(df,Brent(),on="Date",how='inner')  
+    platts = plattscsv
+    df = pd.merge(Cashflowcsv, currencycsv,on="Date", how='inner')
+    df = pd.merge(df,brentcsv,on="Date",how='inner')  
     df['Date'] = pd.to_datetime(df['Date'])
     platts['Date'] = pd.to_datetime(platts['Date'])
 
@@ -75,3 +70,4 @@ def Target():
     Target_df_new["unique_id"] = "Shell"  # NeuralForecast need unique_id, Shell is represent of it.
 
     return Target_df_new
+

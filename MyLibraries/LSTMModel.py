@@ -8,14 +8,8 @@ from neuralforecast.losses.pytorch import DistributionLoss
 
 # Main Table 
 from MyLibraries.DataSets import *
+from MyLibraries.Platts import *
 
-
-Target_df_new = Target()
-
-train = Target_df_new[:-23] # Train and test size aranged in here
-test = Target_df_new[-23:]
-
-h = Target_df_new.index.nunique() #Forecast Horizon, Recommendation range is Target_df_new.index.nunique()
 
 ''' 
 Model Web Url = https://nixtla.github.io/neuralforecast/models.lstm.html
@@ -26,8 +20,15 @@ Model Web Url = https://nixtla.github.io/neuralforecast/models.lstm.html
 
 Recommended Features are writing in here
 '''
-def LSTMModelMain(max_step,submissioncsv = None):
-        h = Target_df_new.index.nunique()
+def LSTMModelMain(max_step,submissioncsv = None,target = None):
+        
+        Target_df_new = target
+
+        train = Target_df_new[:-23] # Train and test size aranged in here
+        test = Target_df_new[-23:]
+
+        h = Target_df_new.index.nunique() #Forecast Horizon, Recommendation range is Target_df_new.index.nunique()
+
         models = [LSTM(h=h,input_size=-1,
                         loss=DistributionLoss(distribution='Normal', level=[90]),
                         max_steps=max_step,

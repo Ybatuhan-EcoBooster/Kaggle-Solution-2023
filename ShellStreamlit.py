@@ -1,9 +1,8 @@
 
 ''' 
-   - -> run commend is = streamlit run ShellStreamlit.py 
+- -> run commend is = streamlit run ShellStreamlit.py 
 
 '''
-
 
 # Streamlit Web
 import streamlit as st
@@ -15,16 +14,13 @@ import plotly.graph_objects as go
 # Data Sets
 from MyLibraries.DataSets import *
 from MyLibraries.LSTMModel import *
+from MyLibraries.Platts import *
 
 ### Page Configure ###
 st.set_page_config(page_title = "Sehll Cash Flow Dashboard 2023",
                     page_icon ='✅',
                     layout = 'wide')
 
-
-Target_df_new = Target()
-train = Target_df_new[:-23]
-test = Target_df_new[-23:]
 
 # Containers
 placeholder = st.empty()
@@ -35,10 +31,9 @@ Currency_area = st.container()
 Text = st.container()
 Information = st.container()
 DataSet = st.container()
-
 ########################################################################## 2.Part ###################################################
 
-def CurrencyTable():
+def CurrencyTable(df = None):
     with placeholder_2.container():
         with Currency_area:
             
@@ -49,7 +44,7 @@ def CurrencyTable():
             ('Graph', 'Table'))
 
             st.write('You selected:', option_2)
-            CurrencyBuySell = Currency()
+            CurrencyBuySell = df
             
             if option_2 == "Graph":
                 tab1,tab2= st.tabs([f"💱 Currency Buy", "💱 Currency Sell "])
@@ -186,32 +181,62 @@ def CurrencyTable():
                     st.markdown("### 🧭 ML/DL")
                     html_5 = "![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)![Plotly](https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white)![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)"
                     st.markdown(html_5,unsafe_allow_html=True)
+#####################################################################################################################################################
 
 ########################################################################## 1. Part ML Model #############################################
+
 with placeholder.container():
+   
     colored_header(label="Welcome To Sehll Cash Flow Datathon 2023 Dashboard Project!",description= None ,color_name="light-blue-70")
     with DataSet:
-        Submission_csv = st.sidebar.file_uploader("Choose a Submission file",accept_multiple_files=False)
-        if Submission_csv is not None:
-            Submission_df = Submission_csv  
-            
-        option = st.sidebar.text_input( "Please Enter Train Size Number!!! 👇")
-        st.sidebar.write('You selected:',option)
+        st.sidebar.title("Files")
 
+        Submission_csv = st.sidebar.file_uploader("Please Choose a Submission file",accept_multiple_files=False)
+        if Submission_csv is not None:
+            Submission_df = Submission_csv 
+        
+        Brent_csv = st.sidebar.file_uploader("Please Choose a Brent file",accept_multiple_files=False)
+        if Brent_csv is not None:
+            Brent_df = Brent(Brent_csv)
+        
+        CashFlow_csv = st.sidebar.file_uploader("Please Choose a CashFlow file",accept_multiple_files=False)
+        if CashFlow_csv is not None:
+            CashFlow_csvdf = CashFlow(CashFlow_csv)
+        
+        Currency_csv = st.sidebar.file_uploader("Please Choose a Currency file",accept_multiple_files=False)
+        if Currency_csv is not None:
+            Currency_df = Currency(Currency_csv)
+        
+        Platts_csv = st.sidebar.file_uploader("Please Choose a Platts file",accept_multiple_files=False)
+        if Platts_csv is not None:
+            Platts_df = Platts(Platts_csv)
+            Target_df_new = Target(plattscsv=Platts_df,Cashflowcsv=CashFlow_csvdf,currencycsv=Currency_df,brentcsv=Brent_df)
+            train = Target_df_new[:-23]
+            test = Target_df_new[-23:] 
+        else:
+            st.info("Please Upload Brent-CashFlow-Platts-USD csv file !!!!")
+            
         @st.cache_data(show_spinner="⚙️ Working Progress... This Progress takes couple minutes!⏱")
         def LSTM_Model():
-            model = LSTMModelMain(int(option),Submission_df)
+            model = LSTMModelMain(int(option),Submission_df,Target_df_new)
             return model
-
-        st.sidebar.info("Please Before Run (Upload Brent-CashFlow-Platts-USD csv file) inside of shell-datathon-cash-flow-coderspace file")
 
         # Main Graph
         with Main_target_graph:
+                Target_df_new = Target(plattscsv=Platts_df,Cashflowcsv=CashFlow_csvdf,currencycsv=Currency_df,brentcsv=Brent_df)
 
-                LSTM_checkbox = st.checkbox("📥 Apply the Model!")
-                CashFlow_df = CashFlow()
-                
+                col_1,col_2 = st.columns(2)
+                with col_1:            
+                    option = st.text_input( "Please Enter Model Train Size Number!!! 👇")
+                    
+                    st.write('You selected:',option)
+
+                with col_2:
+                    LSTM_checkbox = st.checkbox("📥 Apply the Model!")
+
+                CashFlow_df = CashFlow_csvdf   
                 if LSTM_checkbox:
+                    st.success("Model is Completed !!!")
                     Model_df = LSTM_Model()
                     Main_graph = go.Figure()
                     Main_graph.add_trace(go.Line(x= train["ds"], marker_color="skyblue",y= train["y"], name = "Train",visible='legendonly'))
@@ -231,10 +256,10 @@ with placeholder.container():
                         model_csv_df150 = Model_df
                         model_csv_150 = convert_df(model_csv_df150)
                         st.download_button('Download the file',model_csv_150,file_name ="ModelForecast.csv")
-                    st.success('The model is completed!')
-                    CurrencyTable()
+                    CurrencyTable(Currency_df)
+                
 
-                else:    
+                else:
                     Main_graph = go.Figure()
                     Main_graph.add_trace(go.Line(x= train["ds"], y= train["y"],marker_color="blue", name = "Train"))
                     Main_graph.add_trace(go.Line(x=test["ds"], y = test["y"],marker_color="red",name = "Test"))
@@ -247,7 +272,7 @@ with placeholder.container():
                     with Tables:   
                         main_df = Target_df_new[["ds","y"]]
                         main_df.columns = ["Date","Net Cashflow from Operations"]
-                                
+                                        
                         st.title("Real Net Cashflow from Operations")
                         st.dataframe(main_df,use_container_width=True)
-                    CurrencyTable()
+                    CurrencyTable(Currency_df)

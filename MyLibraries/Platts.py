@@ -8,8 +8,8 @@ from window_ops.rolling import rolling_mean, rolling_max, rolling_min
 
 
 # Prediciton of Platts
-def Platts():
-    Platts = pd.read_csv("shell-datathon-cash-flow-coderspace/platts.csv")
+def Platts(plattscsv = None):
+    Platts = pd.read_csv(plattscsv)
     Platts["Tarih"] = pd.to_datetime(Platts['Tarih'])
     Platts['Tarih'] = pd.DatetimeIndex(Platts["Tarih"].dt.strftime("%Y-%m-%d"))
 
