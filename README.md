@@ -1,6 +1,6 @@
 # Shell Cash Flow Datathon 2023
 
-I am making finance analysis in Python to handle big data. In this project, I participated Shell Cash Flow Datathon 2023 on Kaggle. I came in [2'nd](https://www.kaggle.com/competitions/new-shell-cashflow-datathon-2023/leaderboard) among 74 competitors. I used mainly pandas,numpy, NeuralForecast,XGBRegressor,LSTM and MLForecast libraries. Enjoy learning 🧭.
+I am making finance analysis in Python to handle big data. In this project, I participated Shell Cash Flow Datathon 2023 on Kaggle. I came in [2'nd](https://www.kaggle.com/competitions/new-shell-cashflow-datathon-2023/leaderboard) among 74 competitors on Kaggle and I present my project on the jury. I used mainly pandas,numpy, NeuralForecast,XGBRegressor,LSTM and MLForecast libraries. Enjoy learning 🧭.
 
 ## What I did do that Datathon? 🔎
 
