@@ -8,12 +8,10 @@ I predicted the Net Cash flow given from  data sets with external factors to 70 
 
 ## Streamlit Library 💻
 **Streamlit:** : I made some part of my project on Streamlit. It provided many tools for achieving my project's visualization.
-
-RUN COMMAND
----> streamlit run PageStreamlit.py
-
-It is opening of Local Host 
-
+```RUN COMMAND
+  streamlit run PageStreamlit.py
+  #It is opening of Local Host
+```
 ## 📌 Sources 
 - [Data Sets](https://www.kaggle.com/competitions/new-shell-cashflow-datathon-2023/data)
 - [Streamlit Visualization](https://docs.streamlit.io/)
